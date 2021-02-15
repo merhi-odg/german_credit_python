@@ -24,7 +24,7 @@ def begin():
 def action(data):
     
     # Turn data into DataFrame
-    data = pd.DataFrame(data)
+    data = pd.DataFrame([data])
     
     # There are only two unique values in data.number_people_liable.
     # Treat it as a categorical feature

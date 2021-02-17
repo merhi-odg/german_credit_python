@@ -77,10 +77,6 @@
                 "type": "string"
             },
             {
-                "name": "predicted_score",
-                "type": "int"
-            },
-            {
                 "name": "duration_months",
                 "type": "int"
             },

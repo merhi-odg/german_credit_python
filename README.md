@@ -10,7 +10,7 @@ The metrics function expects a DataFrame with at lease the following three colum
 Sample inputs to the metrics function are included (`df_baseline_scored.json`, `df_sample_scored.json`).
 
 The output of the metrics job when the input data is `df_sample_scored.json` should be 
-
+```json
 {
     "attribute_name": "gender",
     "attribute_value": "female",
@@ -25,3 +25,4 @@ The output of the metrics job when the input data is `df_sample_scored.json` sho
     "tnr_disparity": 1.1500366837857667,
     "npv_disparity": 0.9158957106812448
 }
+```

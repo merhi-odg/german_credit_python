@@ -100,7 +100,9 @@ def metrics(data):
     1   gender          male               1.000000        1.000000
     """
 
-    output_metrics_df = disparity_metrics_df # or absolute_metrics_df
+    output_metrics_df = disparity_metrics_df[             # or absolute_metrics_df
+        disparity_metrics_df['attribute_name']=='female'  
+    ]
 
     # Output a JSON object of calculated metrics
     yield output_metrics_df.to_dict(orient="records")

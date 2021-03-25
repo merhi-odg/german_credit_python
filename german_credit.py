@@ -103,6 +103,8 @@ def metrics(data):
     output_metrics_df = disparity_metrics_df[             # or absolute_metrics_df
         disparity_metrics_df['attribute_value']=='female'  
     ]
+    
+    output_metrics_df = output_metrics_df.replace({np.nan: None})
 
     # Output a JSON object of calculated metrics
     yield output_metrics_df.to_dict(orient="records")[0]

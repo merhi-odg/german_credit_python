@@ -49,7 +49,9 @@ def action(data):
 def metrics(data):
     
     data = pd.DataFrame(data)
-
+    
+    print("Checking input shape: ", data.shape, flush=True)
+    
     # To measure Bias towards gender, filter DataFrame
     # to "score", "label_value" (ground truth), and
     # "gender" (protected attribute)

@@ -50,7 +50,11 @@ def metrics(data):
     
     data = pd.DataFrame(data)
     
-    print("Checking input shape: ", data.shape, flush=True)
+    print("\nChecking input shape: ", data.shape, flush=True)
+    
+    print("\nChecking first 5 records:\n", flush=True)
+    
+    print(data.head())
     
     # To measure Bias towards gender, filter DataFrame
     # to "score", "label_value" (ground truth), and

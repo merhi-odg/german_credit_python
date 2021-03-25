@@ -107,6 +107,10 @@ def metrics(data):
     ]
     
     output_metrics_df = output_metrics_df.replace({np.nan: None})
-
+    
+    out = output_metrics_df.to_dict(orient="records")[0]
+    
+    print("\nOutput: ", out, flush=True)
+    
     # Output a JSON object of calculated metrics
-    yield output_metrics_df.to_dict(orient="records")[0]
+    yield out

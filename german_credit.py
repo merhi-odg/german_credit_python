@@ -101,7 +101,7 @@ def metrics(data):
     """
 
     output_metrics_df = disparity_metrics_df[             # or absolute_metrics_df
-        disparity_metrics_df['attribute_name']=='female'  
+        disparity_metrics_df['attribute_value']=='female'  
     ]
 
     # Output a JSON object of calculated metrics

@@ -105,4 +105,4 @@ def metrics(data):
     ]
 
     # Output a JSON object of calculated metrics
-    yield output_metrics_df.to_dict(orient="records")
+    yield output_metrics_df.to_dict(orient="records")[0]

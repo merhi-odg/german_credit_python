@@ -1,101 +1,98 @@
 {
-    "type": "array",
-    "items": {
-        "type": "record",
-        "name": "output_schema.avsc",
-        "fields": [
-            {
-                "name": "id",
-                "type": "int"
-            },
-            {
-                "name": "number_people_liable",
-                "type": "int"
-            },
-            {
-                "name": "age_years",
-                "type": "int"
-            },
-            {
-                "name": "present_employment_since",
-                "type": "string"
-            },
-            {
-                "name": "job",
-                "type": "string"
-            },
-            {
-                "name": "housing",
-                "type": "string"
-            },
-            {
-                "name": "telephone",
-                "type": "string"
-            },
-            {
-                "name": "installment_plans",
-                "type": "string"
-            },
-            {
-                "name": "number_existing_credits",
-                "type": "int"
-            },
-            {
-                "name": "credit_history",
-                "type": "string"
-            },
-            {
-                "name": "foreign_worker",
-                "type": "string"
-            },
-            {
-                "name": "property",
-                "type": "string"
-            },
-            {
-                "name": "installment_rate",
-                "type": "int"
-            },
-            {
-                "name": "purpose",
-                "type": "string"
-            },
-            {
-                "name": "checking_status",
-                "type": "string"
-            },
-            {
-                "name": "present_residence_since",
-                "type": "int"
-            },
-            {
-                "name": "debtors_guarantors",
-                "type": "string"
-            },
-            {
-                "name": "savings_account",
-                "type": "string"
-            },
-            {
-                "name": "duration_months",
-                "type": "int"
-            },
-            {
-                "name": "credit_amount",
-                "type": "int"
-            },
-            {
-                "name": "gender",
-                "type": "string"
-            },
-            {
-                "name": "label",
-                "type": "int"
-            },
-            {
-              "name": "predicted_score",
-              "type": "int"
-           }
-        ]
-     }
+    "type": "record",
+    "name": "output_schema.avsc",
+    "fields": [
+        {
+            "name": "id",
+            "type": "int"
+        },
+        {
+            "name": "number_people_liable",
+            "type": "int"
+        },
+        {
+            "name": "age_years",
+            "type": "int"
+        },
+        {
+            "name": "present_employment_since",
+            "type": "string"
+        },
+        {
+            "name": "job",
+            "type": "string"
+        },
+        {
+            "name": "housing",
+            "type": "string"
+        },
+        {
+            "name": "telephone",
+            "type": "string"
+        },
+        {
+            "name": "installment_plans",
+            "type": "string"
+        },
+        {
+            "name": "number_existing_credits",
+            "type": "int"
+        },
+        {
+            "name": "credit_history",
+            "type": "string"
+        },
+        {
+            "name": "foreign_worker",
+            "type": "string"
+        },
+        {
+            "name": "property",
+            "type": "string"
+        },
+        {
+            "name": "installment_rate",
+            "type": "int"
+        },
+        {
+            "name": "purpose",
+            "type": "string"
+        },
+        {
+            "name": "checking_status",
+            "type": "string"
+        },
+        {
+            "name": "present_residence_since",
+            "type": "int"
+        },
+        {
+            "name": "debtors_guarantors",
+            "type": "string"
+        },
+        {
+            "name": "savings_account",
+            "type": "string"
+        },
+        {
+            "name": "duration_months",
+            "type": "int"
+        },
+        {
+            "name": "credit_amount",
+            "type": "int"
+        },
+        {
+            "name": "gender",
+            "type": "string"
+        },
+        {
+            "name": "label",
+            "type": "int"
+        },
+        {
+          "name": "predicted_score",
+          "type": "int"
+       }
+    ]
 }

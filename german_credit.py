@@ -26,6 +26,10 @@ def action(data):
     # Turn data into DataFrame
     data = pd.DataFrame([data])
     
+    # Change column names to lowercase to accomodate snowflake
+    data.columns = data.columns.str.strip().str.lower()
+
+    
     # There are only two unique values in data.number_people_liable.
     # Treat it as a categorical feature
     data.number_people_liable = data.number_people_liable.astype('object')
@@ -49,6 +53,9 @@ def action(data):
 def metrics(data):
     
     data = pd.DataFrame(data)
+    
+    # Change column names to lowercase to accomodate snowflake
+    data.columns = data.columns.str.strip().str.lower()
     
     print("\nChecking input shape: ", data.shape, flush=True)
     

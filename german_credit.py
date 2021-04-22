@@ -66,8 +66,8 @@ def action(data):
     ]
 
     # MOC expects the action function to be a *yield* function
-    return data.to_dict(orient="records")
-    # yield data.to_dict(orient="records")
+    # return data.to_dict(orient="records")
+    yield data.to_dict(orient="records")
 
 
 # modelop.metrics
@@ -117,8 +117,8 @@ def metrics(data):
     metrics["shap"] = get_shap_values(data_processed)
 
     # MOC expects the action function to be a *yield* function
-    # yield metrics
-    return metrics
+    yield metrics
+    # return metrics
 
 
 def get_bias_metrics(data):

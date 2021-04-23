@@ -93,7 +93,8 @@ def metrics(data):
     # categorical/numerical columns for drift
     categorical_features = [
         f
-        for f in list(metrics_sample.select_dtypes(include=["category", "object"]))
+        #for f in list(metrics_sample.select_dtypes(include=["category", "object"]))
+        for f in list(data.select_dtypes(include=["category", "object"]))
         if f in df_baseline.columns
     ]
     numerical_features = [

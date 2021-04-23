@@ -7,7 +7,7 @@ Sample inputs to the scoring function are included (`df_baseline.json`, `df_samp
 
 Model code includes a metrics function used to compute Group and Bias metrics.
 The metrics function expects a DataFrame with at lease the following three columns three columns: `score` (predicted), `label_value` (actual), and `gender` (protected attribute).
-Sample inputs to the metrics function are included (`df_baseline_scored.json`, `df_sample_scored.json`).
+Sample inputs to the metrics function are included (`df_sample_scored.json`).
 
 The output of the scoring job when the input data is `df_sample.json` is a JSONS file (one-line JSON records). Here are the first three output records
 ```json

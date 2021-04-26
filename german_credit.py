@@ -84,7 +84,7 @@ def metrics(data):
     # calculate metrics
     f1 = f1_score(data["label_value"], data["score"])
     cm = confusion_matrix(data["label_value"], data["score"])
-    labels = ["label_1", "label_2"]
+    labels = ["Default", "Pay Off"]
     cm = matrix_to_dicts(cm, labels)
     fpr, tpr, thres = roc_curve(data["label_value"], data["predicted_probs"])
     auc_val = roc_auc_score(data["label_value"], data["predicted_probs"])

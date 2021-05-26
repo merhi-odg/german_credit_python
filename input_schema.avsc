@@ -213,7 +213,7 @@
       "scoringOptional": true
     },
     {
-      "name": "label",
+      "name": "label_value",
       "type": "int",
       "dataClass": "categorical",
       "role": "label",

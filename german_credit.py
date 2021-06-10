@@ -26,7 +26,7 @@ def action(data):
     # Turn data into DataFrame
     data = pd.DataFrame([data])
     
-    # There are only two unique values in data.number_people_liable.
+    # There are only two unique values in data.NUMBER_PEOPLE_LIABLE.
     # Treat it as a categorical feature
     data.NUMBER_PEOPLE_LIABLE = data.NUMBER_PEOPLE_LIABLE.astype('object')
 

@@ -1,5 +1,5 @@
 # modelop.schema.0: input_schema.avsc
-# modelop.schema.1: output_schema.avsc
+# modelop.slot.1: in-use
 
 import pandas as pd
 import pickle
@@ -28,18 +28,17 @@ def action(data):
     
     # There are only two unique values in data.number_people_liable.
     # Treat it as a categorical feature
-    data.number_people_liable = data.number_people_liable.astype('object')
+    data.NUMBER_PEOPLE_LIABLE = data.NUMBER_PEOPLE_LIABLE.astype('object')
+
 
     predictive_features = [
-        'duration_months', 'credit_amount', 'installment_rate',
-        'present_residence_since', 'age_years', 'number_existing_credits',
-        'checking_status', 'credit_history', 'purpose', 'savings_account',
-        'present_employment_since', 'debtors_guarantors', 'property',
-        'installment_plans', 'housing', 'job', 'number_people_liable',
-        'telephone', 'foreign_worker'
+        "DURATION_MONTHS","CREDIT_AMOUNT","INSTALLMENT_RATE","PRESENT_RESIDENCE_SINCE","AGE_YEARS",
+        "NUMBER_EXISTING_CREDITS","CHECKING_STATUS","CREDIT_HISTORY","PURPOSE",
+        "SAVINGS_ACCOUNT","PRESENT_EMPLOYMENT_SINCE","DEBTORS_GUARANTORS",
+        "PROPERTY","INSTALLMENT_PLANS","HOUSING","JOB","NUMBER_PEOPLE_LIABLE","TELEPHONE","FOREIGN_WORKER"
     ]
     
-    data["predicted_score"] = logreg_classifier.predict(data[predictive_features])
+    data["SCORE"] = logreg_classifier.predict(data[predictive_features])
     
     # MOC expects the action function to be a *yield* function
     yield data.to_dict(orient="records")
@@ -52,9 +51,16 @@ def metrics(data):
 
     # To measure Bias towards gender, filter DataFrame
     # to "score", "label_value" (ground truth), and
-    # "gender" (protected attribute)
-    data_scored = data[["score", "label_value", "gender"]]
-
+    # "GENDER" (protected attribute)
+    data_scored = data[["SCORE", "LABEL_VALUE", "GENDER"]]
+    
+    data_scored = data_scored.rename(
+        columns={
+            "LABEL_VALUE": "label_value",
+            "SCORE": "score"
+        }
+    )
+    
     # Process DataFrame
     data_scored_processed, _ = preprocess_input_df(data_scored)
 
@@ -72,8 +78,8 @@ def metrics(data):
     # For example:
     """
         attribute_name  attribute_value     tpr     tnr  ... precision
-    0   gender          female              0.60    0.88 ... 0.75
-    1   gender          male                0.49    0.90 ... 0.64
+    0   GENDER          female              0.60    0.88 ... 0.75
+    1   GENDER          male                0.49    0.90 ... 0.64
     """
 
     # Bias Metrics
@@ -83,7 +89,7 @@ def metrics(data):
     bias_df = b.get_disparity_predefined_groups(
         xtab,
         original_df=data_scored_processed,
-        ref_groups_dict={'gender': 'male'},
+        ref_groups_dict={'GENDER': 'male'},
         alpha=0.05, mask_significance=True
     )
 
@@ -96,8 +102,8 @@ def metrics(data):
     # For example:
     """
         attribute_name	attribute_value    ppr_disparity   precision_disparity
-    0   gender          female             0.714286        1.41791
-    1   gender          male               1.000000        1.000000
+    0   GENDER          female             0.714286        1.41791
+    1   GENDER          male               1.000000        1.000000
     """
 
     output_metrics_df = disparity_metrics_df # or absolute_metrics_df

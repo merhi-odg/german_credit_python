@@ -194,7 +194,7 @@
     },
     {
       "name": "foreign_worker",
-      "type": "boolean",
+      "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
       "protectedClass": false,

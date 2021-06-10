@@ -3,7 +3,7 @@
   "type": "record",
   "fields": [
     {
-      "name": "id",
+      "name": "ID",
       "type": "int",
       "dataClass": "numerical",
       "role": "identifier",
@@ -13,7 +13,7 @@
       "scoringOptional": false
     },
     {
-      "name": "duration_months",
+      "name": "DURATION_MONTHS",
       "type": "int",
       "dataClass": "numerical",
       "role": "predictor",
@@ -23,7 +23,7 @@
       "scoringOptional": false
     },
     {
-      "name": "credit_amount",
+      "name": "CREDIT_AMOUNT",
       "type": "float",
       "dataClass": "numerical",
       "role": "predictor",
@@ -33,7 +33,7 @@
       "scoringOptional": false
     },
     {
-      "name": "installment_rate",
+      "name": "INSTALLMENT_RATE",
       "type": "int",
       "dataClass": "numerical",
       "role": "predictor",
@@ -43,7 +43,7 @@
       "scoringOptional": false
     },
     {
-      "name": "present_residence_since",
+      "name": "PRESENT_RESIDENCE_SINCE",
       "type": "int",
       "dataClass": "numerical",
       "role": "predictor",
@@ -53,7 +53,7 @@
       "scoringOptional": false
     },
     {
-      "name": "age_years",
+      "name": "AGE_YEARS",
       "type": "int",
       "dataClass": "numerical",
       "role": "predictor",
@@ -63,7 +63,7 @@
       "scoringOptional": false
     },
     {
-      "name": "number_existing_credits",
+      "name": "NUMBER_EXISTING_CREDITS",
       "type": "int",
       "dataClass": "numerical",
       "role": "predictor",
@@ -73,7 +73,7 @@
       "scoringOptional": false
     },
     {
-      "name": "checking_status",
+      "name": "CHECKING_STATUS",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -83,7 +83,7 @@
       "scoringOptional": false
     },
     {
-      "name": "credit_history",
+      "name": "CREDIT_HISTORY",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -93,7 +93,7 @@
       "scoringOptional": false
     },
     {
-      "name": "purpose",
+      "name": "PURPOSE",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -103,7 +103,7 @@
       "scoringOptional": false
     },
     {
-      "name": "savings_account",
+      "name": "SAVINGS_ACCOUNT",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -113,7 +113,7 @@
       "scoringOptional": false
     },
     {
-      "name": "present_employment_since",
+      "name": "PRESENT_EMPLOYMENT_SINCE",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -123,7 +123,7 @@
       "scoringOptional": false
     },
     {
-      "name": "debtors_guarantors",
+      "name": "DEBTORS_GUARANTORS",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -133,7 +133,7 @@
       "scoringOptional": false
     },
     {
-      "name": "property",
+      "name": "PROPERTY",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -143,7 +143,7 @@
       "scoringOptional": false
     },
     {
-      "name": "installment_plans",
+      "name": "INSTALLMENT_PLANS",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -153,7 +153,7 @@
       "scoringOptional": false
     },
     {
-      "name": "housing",
+      "name": "HOUSING",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -163,7 +163,7 @@
       "scoringOptional": false
     },
     {
-      "name": "job",
+      "name": "JOB",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -173,7 +173,7 @@
       "scoringOptional": false
     },
     {
-      "name": "number_people_liable",
+      "name": "NUMBER_PEOPLE_LIABLE",
       "type": "int",
       "dataClass": "numerical",
       "role": "predictor",
@@ -183,7 +183,7 @@
       "scoringOptional": false
     },
     {
-      "name": "telephone",
+      "name": "TELEPHONE",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -193,7 +193,7 @@
       "scoringOptional": false
     },
     {
-      "name": "foreign_worker",
+      "name": "FOREIGN_WORKER",
       "type": "boolean",
       "dataClass": "categorical",
       "role": "predictor",
@@ -203,7 +203,7 @@
       "scoringOptional": false
     },
     {
-      "name": "gender",
+      "name": "GENDER",
       "type": "string",
       "dataClass": "categorical",
       "role": "predictor",
@@ -213,7 +213,7 @@
       "scoringOptional": true
     },
     {
-      "name": "label_value",
+      "name": "LABEL_VALUE",
       "type": "int",
       "dataClass": "categorical",
       "role": "label",
@@ -223,7 +223,7 @@
       "scoringOptional": true
     },
     {
-      "name": "score",
+      "name": "SCORE",
       "type": "int",
       "dataClass": "categorical",
       "role": "score",

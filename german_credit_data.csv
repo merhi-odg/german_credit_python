@@ -1,4 +1,4 @@
-id,duration_months,credit_amount,installment_rate,present_residence_since,age_years,number_existing_credits,checking_status,credit_history,purpose,savings_account,present_employment_since,debtors_guarantors,property,installment_plans,housing,job,number_people_liable,telephone,foreign_worker,gender,label
+ID,DURATION_MONTHS,CREDIT_AMOUNT,INSTALLMENT_RATE,PRESENT_RESIDENCE_SINCE,AGE_YEARS,NUMBER_EXISTING_CREDITS,CHECKING_STATUS,CREDIT_HISTORY,PURPOSE,SAVINGS_ACCOUNT,PRESENT_EMPLOYMENT_SINCE,DEBTORS_GUARANTORS,PROPERTY,INSTALLMENT_PLANS,HOUSING,JOB,NUMBER_PEOPLE_LIABLE,TELEPHONE,FOREIGN_WORKER,GENDER,LABEL
 0,6,1169,4,4,67,2,A11,A34,A43,A65,A75,A101,A121,A143,A152,A173,1,A192,A201,male,0
 1,48,5951,2,2,22,1,A12,A32,A43,A61,A73,A101,A121,A143,A152,A173,1,A191,A201,female,1
 2,12,2096,2,3,49,1,A14,A34,A46,A61,A74,A101,A121,A143,A152,A172,2,A191,A201,male,0

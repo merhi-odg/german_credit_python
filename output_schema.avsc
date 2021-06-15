@@ -89,11 +89,11 @@
                 "type": "string"
             },
             {
-                "name": "label",
+                "name": "label_value",
                 "type": "int"
             },
             {
-              "name": "predicted_score",
+              "name": "score",
               "type": "int"
            }
         ]

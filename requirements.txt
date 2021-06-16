@@ -1,1 +1,4 @@
-shap==0.39.0
+shap==0.35.0
+numpy==1.19.5
+pandas==1.1.5
+sklearn==0.22

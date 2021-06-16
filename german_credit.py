@@ -1,5 +1,5 @@
 # modelop.schema.0: input_schema.avsc
-# modelop.schema.1: output_schema.avsc
+# modelop.schema.1: outpu_schema.avsc
 
 import pandas as pd
 import numpy as np
@@ -31,20 +31,23 @@ def begin():
 
 
 def preprocess(data):
+    data_processed = data.copy(deep=True)
     # There are only two unique values in data.number_people_liable.
     # Treat it as a categorical feature
-    data["number_people_liable"] = data["number_people_liable"].astype("object")
+    data_processed["number_people_liable"] = data_processed[
+        "number_people_liable"
+    ].astype("object")
 
     # one-hot encode data with pd.get_dummies()
-    data = pd.get_dummies(data)
+    data_processed = pd.get_dummies(data_processed)
 
     # in case features don't exist that are needed for the model (possible when dummying)
     # will create column of zeros for that feature
     for col in predictive_features:
-        if col not in data.columns:
-            data[col] = np.zeros(data.shape[0])
+        if col not in data_processed.columns:
+            data_processed[col] = np.zeros(data_processed.shape[0])
 
-    return data
+    return data_processed
 
 
 # modelop.score
@@ -54,14 +57,43 @@ def action(data):
     data = pd.DataFrame(data)
 
     # preprocess data
-    data = preprocess(data)
+    data_processed = preprocess(data)
 
     # generate predictions
     data["predicted_probs"] = [
-        x[1] for x in logreg_classifier.predict_proba(data[predictive_features])
+        x[1]
+        for x in logreg_classifier.predict_proba(data_processed[predictive_features])
     ]
-    data["score"] = logreg_classifier.predict(data[predictive_features])
+    data["score"] = logreg_classifier.predict(data_processed[predictive_features])
 
+    data = data[
+        [
+            "id",
+            "duration_months",
+            "credit_amount",
+            "installment_rate",
+            "present_residence_since",
+            "age_years",
+            "number_existing_credits",
+            "checking_status",
+            "credit_history",
+            "purpose",
+            "savings_account",
+            "present_employment_since",
+            "debtors_guarantors",
+            "property",
+            "installment_plans",
+            "housing",
+            "job",
+            "number_people_liable",
+            "telephone",
+            "foreign_worker",
+            "gender",
+            "label_value",
+            "score",
+            "predicted_probs",
+        ]
+    ]
     # MOC expects the action function to be a *yield* function
     yield data.to_dict(orient="records")
 
@@ -70,6 +102,9 @@ def action(data):
 def metrics(df_baseline, data):
     # dictionary to hold final metrics
     metrics = {}
+
+    # convert data into DataFrame
+    data = pd.DataFrame(data)
 
     # getting dummies for shap values
     data_processed = preprocess(data)[predictive_features]

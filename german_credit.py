@@ -4,6 +4,7 @@
 import pandas as pd
 import numpy as np
 import pickle
+import shap
 from aequitas.preprocessing import preprocess_input_df
 from aequitas.group import Group
 from aequitas.bias import Bias

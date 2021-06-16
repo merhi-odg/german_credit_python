@@ -1,5 +1,5 @@
-# modelop.schema.0: input_schema
-# modelop.schema.1: output_schema
+# modelop.schema.0: input_schema.avsc
+# modelop.schema.1: output_schema.avsc
 
 import pandas as pd
 import numpy as np

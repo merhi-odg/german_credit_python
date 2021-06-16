@@ -54,7 +54,7 @@ def preprocess(data):
 def action(data):
 
     # Turn data into DataFrame
-    data = pd.DataFrame(data)
+    data = pd.DataFrame([data])
 
     # preprocess data
     data_processed = preprocess(data)

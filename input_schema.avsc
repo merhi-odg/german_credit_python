@@ -1,6 +1,6 @@
 {
    "type": "record",
-   "name": "input_schema.avsc",
+   "name": "input_schema",
    "fields": [
         {
             "name": "id",
@@ -87,7 +87,7 @@
             "type": "string"
         },
         {
-            "name": "label",
+            "name": "label_value",
             "type": "int"
         }
     ]

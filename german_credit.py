@@ -1,9 +1,9 @@
+# modelop.schema.0: input_schema
+# modelop.schema.1: output_schema
+
 import pandas as pd
 import numpy as np
-import seaborn as sns
 import pickle
-import copy
-import shap
 from aequitas.preprocessing import preprocess_input_df
 from aequitas.group import Group
 from aequitas.bias import Bias
@@ -17,7 +17,6 @@ def begin():
 
     global logreg_classifier
     global predictive_features
-    global df_baseline
     global explainer
 
     # load pickled logistic regression model
@@ -25,9 +24,6 @@ def begin():
 
     # load pickled predictive feature list
     predictive_features = pickle.load(open("predictive_features.pickle", "rb"))
-
-    # load df_baseline_scored for metrics (specifically drift calculations)
-    df_baseline = pd.read_json("df_baseline_scored.json", orient="records", lines=True)
 
     # load shap explainer
     explainer = pickle.load(open("explainer.pickle", "rb"))
@@ -60,23 +56,19 @@ def action(data):
     data = preprocess(data)
 
     # generate predictions
-    data["predicted_score"] = logreg_classifier.predict(data[predictive_features])
     data["predicted_probs"] = [
         x[1] for x in logreg_classifier.predict_proba(data[predictive_features])
     ]
+    data["score"] = logreg_classifier.predict(data[predictive_features])
 
     # MOC expects the action function to be a *yield* function
-    # return data.to_dict(orient="records")
     yield data.to_dict(orient="records")
 
 
 # modelop.metrics
-def metrics(data):
+def metrics(df_baseline, data):
     # dictionary to hold final metrics
     metrics = {}
-
-    # convert data into DataFrame
-    data = pd.DataFrame(data)
 
     # getting dummies for shap values
     data_processed = preprocess(data)[predictive_features]
@@ -88,12 +80,26 @@ def metrics(data):
     cm = matrix_to_dicts(cm, labels)
     fpr, tpr, thres = roc_curve(data["label_value"], data["predicted_probs"])
     auc_val = roc_auc_score(data["label_value"], data["predicted_probs"])
-    rc = [{"fpr": x[0], "tpr": x[1]} for x in list(zip(fpr, tpr))]
+    roc = [{"fpr": x[0], "tpr": x[1]} for x in list(zip(fpr, tpr))]
+
+    # assigning metrics to output dictionary
+    metrics["performance"] = [
+        {
+            "test_name": "Classification Metrics",
+            "test_category": "performance",
+            "test_type": "classification_metrics",
+            "test_id": "performance_classification_metrics",
+            "values": {"f1_score": f1, "auc": auc_val, "confusion_matrix": cm},
+        }
+    ]
+
+    # top-level metrics
+    metrics["confusion_matrix"] = cm
+    metrics["roc"] = roc
 
     # categorical/numerical columns for drift
     categorical_features = [
         f
-        #for f in list(metrics_sample.select_dtypes(include=["category", "object"]))
         for f in list(data.select_dtypes(include=["category", "object"]))
         if f in df_baseline.columns
     ]
@@ -107,19 +113,15 @@ def metrics(data):
     ]
 
     # assigning metrics to output dictionary
-    metrics["f1_score"] = f1
-    metrics["confusion_matrix"] = cm
-    metrics["auc"] = auc_val
-    metrics["ROC"] = rc
     metrics["bias"] = get_bias_metrics(data)
-    metrics["drift_metrics"] = get_drift_metrics(
+    metrics["data_drift"] = get_data_drift_metrics(
         df_baseline, data, numerical_features, categorical_features
     )
-    metrics["shap"] = get_shap_values(data_processed)
+    metrics["concept_drift"] = get_concept_drift_metrics(df_baseline, data)
+    metrics["explainability"] = [get_shap_values(data_processed)]
 
     # MOC expects the action function to be a *yield* function
     yield metrics
-    # return metrics
 
 
 def get_bias_metrics(data):
@@ -162,10 +164,17 @@ def get_bias_metrics(data):
         ["attribute_name", "attribute_value"] + calculated_disparities
     ]
 
-    output_metrics_df = disparity_metrics_df  # or absolute_metrics_df
-
     # Output a JSON object of calculated metrics
-    return output_metrics_df.to_dict(orient="records")
+    return {
+        "test_name": "Aequitas Bias",
+        "test_category": "bias",
+        "test_type": "bias",
+        "protected_class": "race",
+        "test_id": "bias_bias_gender",
+        "reference_group": "male",
+        "thresholds": {"min": 0.8, "max": 1.25},
+        "values": [disparity_metrics_df.to_dict(orient="records")],
+    }
 
 
 def matrix_to_dicts(matrix, labels):
@@ -175,19 +184,22 @@ def matrix_to_dicts(matrix, labels):
     return cm
 
 
-def get_drift_metrics(df_baseline, df_sample, numerical_cols, categorical_cols):
-    drift_metrics = {}
-    drift_metrics["drift__es"] = es_metric(df_baseline, df_sample, numerical_cols)
-    drift_metrics["drift__ks"] = ks_metric(df_baseline, df_sample, numerical_cols)
-    drift_metrics["drift__js"] = js_metric(
-        df_baseline, df_sample, numerical_cols, categorical_cols
+def get_data_drift_metrics(df_baseline, df_sample, numerical_cols, categorical_cols):
+    data_drift_metrics = []
+    data_drift_metrics.append(es_metric(df_baseline, df_sample, numerical_cols))
+    data_drift_metrics.append(ks_metric(df_baseline, df_sample, numerical_cols))
+    data_drift_metrics.append(
+        js_metric(df_baseline, df_sample, numerical_cols, categorical_cols)
     )
-    drift_metrics["concept_drift__es"] = es_metric(df_baseline, df_sample, ["score"])
-    drift_metrics["concept_drift__ks"] = ks_metric(df_baseline, df_sample, ["score"])
-    drift_metrics["concept_drift__js"] = js_metric(
-        df_baseline, df_sample, ["score"], []
-    )
-    return drift_metrics
+    return data_drift_metrics
+
+
+def get_concept_drift_metrics(df_baseline, df_sample):
+    concept_drift_metrics = []
+    concept_drift_metrics.append(es_metric(df_baseline, df_sample, ["score"]))
+    concept_drift_metrics.append(ks_metric(df_baseline, df_sample, ["score"]))
+    concept_drift_metrics.append(js_metric(df_baseline, df_sample, ["score"], []))
+    return concept_drift_metrics
 
 
 def ks_metric(df1, df2, numerical_columns):
@@ -196,9 +208,15 @@ def ks_metric(df1, df2, numerical_columns):
         for col in numerical_columns
     ]
     p_values = [x[1] for x in ks_tests]
-    list_of_pval = [f"{col}_p-value" for col in numerical_columns]
-    ks_pvalues = dict(zip(list_of_pval, p_values))
-    return ks_pvalues
+    ks_pvalues = dict(zip(numerical_columns, p_values))
+    return {
+        "test_name": "Kolmogorov-Smirnov",
+        "test_category": "data_drift",
+        "test_type": "kolmogorov_smirnov",
+        "metric": "p_value",
+        "test_id": "data_drift_kolmogorov_smirnov_p_value",
+        "values": ks_pvalues,
+    }
 
 
 def es_metric(df1, df2, numerical_columns):
@@ -210,9 +228,15 @@ def es_metric(df1, df2, numerical_columns):
             es_test = [None, None]
         es_tests.append(es_test)
     p_values = [x[1] for x in es_tests]
-    list_of_pval = [f"{col}_p-value" for col in numerical_columns]
-    es_pvalues = dict(zip(list_of_pval, p_values))
-    return es_pvalues
+    es_pvalues = dict(zip(numerical_columns, p_values))
+    return {
+        "test_name": "Epps-Singleton",
+        "test_category": "data_drift",
+        "test_type": "epps_singleton",
+        "metric": "p_value",
+        "test_id": "data_drift_epps_singleton_p_value",
+        "values": es_pvalues,
+    }
 
 
 def js_metric(df1, df2, numerical_columns, categorical_columns):
@@ -267,7 +291,14 @@ def js_metric(df1, df2, numerical_columns, categorical_columns):
 
     list_output = sorted(res.items(), key=lambda x: x[1], reverse=True)
     dict_output = dict(list_output)
-    return dict_output
+    return {
+        "test_name": "Jensen-Shannon",
+        "test_category": "data_drift",
+        "test_type": "jensen_shannon",
+        "metric": "distance",
+        "test_id": "data_drift_jensen_shannon_distance",
+        "values": dict_output,
+    }
 
 
 def get_shap_values(data):
@@ -282,4 +313,11 @@ def get_shap_values(data):
     }
 
     # show the values
-    return sorted_shap_values
+    return {
+        "test_name": "SHAP",
+        "test_category": "interpretability",
+        "test_type": "shap",
+        "metric": "feature_importance",
+        "test_id": "interpretability_shap_feature_importance",
+        "values": sorted_shap_values,
+    }

@@ -2,7 +2,7 @@
     "type": "array",
     "items": {
         "type": "record",
-        "name": "output_schema.avsc",
+        "name": "output_schema",
         "fields": [
             {
                 "name": "id",
@@ -89,13 +89,17 @@
                 "type": "string"
             },
             {
-                "name": "label",
+                "name": "label_value",
                 "type": "int"
             },
             {
-              "name": "predicted_score",
+              "name": "score",
               "type": "int"
-           }
+            },
+            {
+              "name": "predicted_probs",
+              "type": "float"
+            }
         ]
      }
 }

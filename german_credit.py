@@ -149,7 +149,7 @@ def metrics(df_baseline, data):
     ]
 
     # assigning metrics to output dictionary
-    metrics["bias"] = get_bias_metrics(data)
+    metrics["bias"] = [get_bias_metrics(data)]
     metrics["data_drift"] = get_data_drift_metrics(
         df_baseline, data, numerical_features, categorical_features
     )

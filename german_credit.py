@@ -209,7 +209,7 @@ def get_bias_metrics(data):
         "test_id": "bias_bias_gender",
         "reference_group": "male",
         "thresholds": {"min": 0.8, "max": 1.25},
-        "values": [disparity_metrics_df.to_dict(orient="records")],
+        "values": disparity_metrics_df.to_dict(orient="records"),
     }
 
 

@@ -205,7 +205,7 @@ def get_bias_metrics(data):
         "test_name": "Aequitas Bias",
         "test_category": "bias",
         "test_type": "bias",
-        "protected_class": "race",
+        "protected_class": "gender",
         "test_id": "bias_bias_gender",
         "reference_group": "male",
         "thresholds": {"min": 0.8, "max": 1.25},

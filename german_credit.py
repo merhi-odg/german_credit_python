@@ -154,7 +154,7 @@ def metrics(df_baseline, data):
         df_baseline, data, numerical_features, categorical_features
     )
     metrics["concept_drift"] = get_concept_drift_metrics(df_baseline, data)
-    metrics["explainability"] = [get_shap_values(data_processed)]
+    metrics["interpretability"] = [get_shap_values(data_processed)]
 
     # MOC expects the action function to be a *yield* function
     yield metrics

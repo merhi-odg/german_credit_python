@@ -1,8 +1,25 @@
 # german_credit_python
- 
+
 A Logistic Regression Python model to predict loan default.
 
-To run the attached Jupyter notebook, create a Python 3.6.9  virtual environments with the libraries versioned in `requirements.txt`.
+## Running Locally
+
+To run this model locally, create a new Python 3.6.8 virtual environment
+(such as with `pyenv`). Then, use the following command to update `pip`
+and `setuptools`:
+
+```
+pip3 install --upgrade setuptools
+pip3 install --upgrade pip
+```
+
+And install the required libraries:
+
+```
+pip3 install -r requirements.txt
+```
+
+## Details
 
 Model was trained on the German Credit Data dataset.
 `logreg_classifier.pickle` is the trained model artifact.

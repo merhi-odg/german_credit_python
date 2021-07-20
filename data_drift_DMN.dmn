@@ -7,7 +7,7 @@
           <text></text>
         </inputExpression>
       </input>
-      <input id="InputClause_08e7ybd" label="housing_js_distance" biodi:width="166" camunda:inputVariable="installment_rate_ks_pvalue">
+      <input id="InputClause_08e7ybd" label="installment_rate_js_distance" biodi:width="227" camunda:inputVariable="installment_rate_js_distance">
         <inputExpression id="LiteralExpression_0nr86e9" typeRef="double" expressionLanguage="feel">
           <text></text>
         </inputExpression>

@@ -26,9 +26,15 @@ Model was trained on the German Credit Data dataset.
 
 ## Scoring Jobs
 
-Sample inputs: choose **one** of
+### Sample inputs: 
+
+Choose **one** of
  - `df_baseline.json`
  - `df_sample.json`
+
+### Schema checking:
+
+Scoring Jobs can be run with any combination of input/output schema checking.
 
 Sample Output:
 The output of the scoring job when the input data is `df_sample.json` is a JSONS file (one-line JSON records). Here are the first three output records:

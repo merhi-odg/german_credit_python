@@ -45,4 +45,3 @@ The metrics function expects a DataFrame with at lease the following three colum
 Sample inputs: choose **one** of
  - `df_baseline_scored.json`
  - `df_sample_scored.json`
-

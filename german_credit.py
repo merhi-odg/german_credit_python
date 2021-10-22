@@ -41,7 +41,7 @@ def action(data):
     data["SCORE"] = logreg_classifier.predict(data[predictive_features])
     
     # MOC expects the action function to be a *yield* function
-    yield data.to_dict(orient="records")
+    yield data.to_dict(orient="records")[0]
 
 
 # modelop.metrics

@@ -4,11 +4,15 @@
 import pandas as pd
 import pickle
 import numpy as np
+import logging
 
 # Bias libraries
 from aequitas.preprocessing import preprocess_input_df
 from aequitas.group import Group
 from aequitas.bias import Bias 
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level="INFO")
 
 
 # modelop.init
@@ -48,6 +52,10 @@ def action(data):
 def metrics(data):
     
     data = pd.DataFrame(data)
+    
+    logger.info("Metrics data is of shape: %s", data.shape)
+    
+    logger.info("First 5 records:\n %s", data.head())
 
     # To measure Bias towards gender, filter DataFrame
     # to "score", "label_value" (ground truth), and
@@ -107,6 +115,10 @@ def metrics(data):
     """
 
     output_metrics_df = disparity_metrics_df # or absolute_metrics_df
+    
+    out = disparity_metrics_df.to_dict(orient="records")[0]
+    
+    logger.info("Output: \n%s", out)
 
     # Output a JSON object of calculated metrics
-    yield output_metrics_df.to_dict(orient="records")
+    yield out

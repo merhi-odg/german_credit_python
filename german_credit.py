@@ -4,11 +4,15 @@
 import pandas as pd
 import pickle
 import numpy as np
+import logging
 
 # Bias libraries
 from aequitas.preprocessing import preprocess_input_df
 from aequitas.group import Group
 from aequitas.bias import Bias 
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level="INFO")
 
 
 # modelop.init
@@ -57,11 +61,9 @@ def metrics(data):
     # Change column names to lowercase to accomodate snowflake
     data.columns = data.columns.str.strip().str.lower()
     
-    print("\nChecking input shape: ", data.shape, flush=True)
+    logger.info("Metrics data is of shape: %s", data.shape)
     
-    print("\nChecking first 5 records:\n", flush=True)
-    
-    print(data.head())
+    logger.info("First 5 records:\n %s", data.head())
     
     # To measure Bias towards gender, filter DataFrame
     # to "score", "label_value" (ground truth), and
@@ -121,7 +123,7 @@ def metrics(data):
     
     out = output_metrics_df.to_dict(orient="records")[0]
     
-    print("\nOutput: ", out, flush=True)
+    logger.info("Output: \n%s", out)
     
     # Output a JSON object of calculated metrics
     yield out

@@ -222,7 +222,6 @@ def matrix_to_dicts(matrix, labels):
 
 def get_data_drift_metrics(df_baseline, df_sample, numerical_cols, categorical_cols):
     data_drift_metrics = []
-    data_drift_metrics.append(es_metric(df_baseline, df_sample, numerical_cols))
     data_drift_metrics.append(ks_metric(df_baseline, df_sample, numerical_cols))
     data_drift_metrics.append(
         js_metric(df_baseline, df_sample, numerical_cols, categorical_cols)
@@ -232,7 +231,6 @@ def get_data_drift_metrics(df_baseline, df_sample, numerical_cols, categorical_c
 
 def get_concept_drift_metrics(df_baseline, df_sample):
     concept_drift_metrics = []
-    concept_drift_metrics.append(es_metric(df_baseline, df_sample, ["score"]))
     concept_drift_metrics.append(ks_metric(df_baseline, df_sample, ["score"]))
     concept_drift_metrics.append(js_metric(df_baseline, df_sample, ["score"], []))
     return concept_drift_metrics

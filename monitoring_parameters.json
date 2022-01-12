@@ -1,0 +1,33 @@
+{
+    "monitoring": {
+        "bias": {
+            "protected_classes": [
+                {
+                    "attribute": "gender",
+                    "reference_group": "male"
+                }
+            ]
+        },
+        "performance": {
+            "model_type": "classification",
+            "positive_class_label": 1
+        },
+        "business_value": {
+            "ROI": {
+                "amount_field": "credit_amount",
+                "label_field": "label_value",
+                "score_field": "score",
+                "baseline_metrics": {
+                    "TNR": 0.877,
+                    "TPR": 0.531
+                },
+                "cost_multipliers": {
+                    "TP": 1.5,
+                    "FP": -2,
+                    "TN": 2,
+                    "FN": -1.5
+                }
+            }
+        }
+    }
+}
